@@ -1,0 +1,25 @@
+import React from "react";
+import Wrapper from "./Wrapper";
+
+
+
+const ProductGallery = ({mainHeading,Data}) => {
+  return (
+    <div className="productGallery mb-20">
+      
+      {mainHeading&&<Wrapper><span className=" font-oswald font-extrabold text-2xl">{mainHeading}</span></Wrapper>}
+      <Wrapper className="flex  mt-[20px] justify-center flex-wrap gap-3">
+      
+        {Data.map((item)=>{
+            return(<div className="flex flex-col gap-3">
+            <img className="h-[550px] " src={item.image} />
+            <span className="font-bold text-lg">{item.subtitle}</span>
+          </div>)
+
+        })}
+      </Wrapper>
+    </div>
+  );
+};
+
+export default ProductGallery;
