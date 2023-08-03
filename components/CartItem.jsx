@@ -2,55 +2,57 @@ import React from 'react'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { IconButton } from '@mui/material'
-const CartItem = () => {
+import Image from 'next/image';
+import { useDispatch } from 'react-redux';
+import { updateCart,removeFromCart } from '@/store/cartSlice';
+const CartItem = ({data}) => {
+    const dispatch=useDispatch()
+    const product=data.attributes
+    const updateCartItem=(e,key)=>{
+        let payload={
+            val:e.target.value,
+            key,
+            id:data.id
+        }
+        dispatch(updateCart(payload))
+        
+    }
+    
+
   return (
     <div className='border-b gap-3 md:gap-5 flex py-5'>
-
-        <img className='aspect-square object-contain md:w-[170px] w-[125px]' src="https://static.nike.com/a/images/t_PDP_864_v1,f_auto,q_auto:eco/0a60213f-d4e7-421c-865f-bb8d51cdeefc/zion-2-x-naruto-mens-basketball-shoes-b3RVXd.png"/>
+        <Image className='aspect-square rounded-sm object-contain md:w-[170px] w-[125px]' width={150} height={105} src={product.thumbnail.data.attributes.url}/>
     
     {/* Text Block */}
     <div className='w-full'>
         <div className='flex justify-between'>
-        <div className='text-xl font-semibold'>Product Name</div>
-        <div className='text-xl text-gray-500 hidden md:block font-semibold'>Price</div>
+        <div className='text-xl font-semibold'>{product.name}</div>
+        <div className='text-xl text-gray-500 hidden md:block font-semibold'>Rs. {product.price}</div>
         </div>
-        <div className='text-xl text-gray-500'>Shoe Type</div>
-        <div className='text-xl text-gray-700 md:hidden font-semibold'>Price</div>
+        <div className='text-xl text-gray-500'>{product.subtitle}</div>
+        <div className='text-xl text-gray-700 md:hidden font-semibold'>Rs. {product.price}</div>
         {/* Size Quantity Start */}
         <div className=' md:flex items-center justify-between'>
             {/* Size Row Start */}
             <div className='md:flex mt-3 gap-3'>
             <div className='flex items-center gap-2 text-gray-500 font-semibold text-lg'>
                 <div>Size</div>
-                <select>
-                    <option value="1">UK 6</option>
-                    <option value="1">UK 6</option>
-                    <option value="1">UK 6</option>
-                    <option value="1">UK 6</option>
-                    <option value="1">UK 6</option>
-                    <option value="1">UK 6</option>
-                    <option value="1">UK 6</option>
-                    <option value="1">UK 6</option>
+                <select onChange={(e)=>updateCartItem(e,"selectedSize")}>
+                    {product.size.data.map((size,i)=>(size.enabled&&<option
+                    selected={data.selectedSize==size.size} value={size.size}>{size.size}</option>))}
                 </select>
             </div>
             {/* Size Row End */}
             {/* Quantity Row Start */}
             <div className='flex items-center gap-2 text-gray-500 font-semibold text-lg'>
-                <div>Quanity</div>
-                <select>
-                    <option value="1">1</option>
-                    <option value="1">2</option>
-                    <option value="1">3</option>
-                    <option value="1">4</option>
-                    <option value="1">5</option>
-                    <option value="1">6</option>
-                    <option value="1">7</option>
-                    <option value="1">8</option>
-                </select>
+                <div>Quanity: </div>
+            
+                    {data.quantity}
+                
             </div>
             </div>
             {/* Quantity Row End */}
-            <div className="text-gray-500"><IconButton><DeleteOutlineOutlinedIcon/></IconButton></div>
+            <div onClick={()=>dispatch(removeFromCart(data))} className="text-gray-500"><IconButton><DeleteOutlineOutlinedIcon/></IconButton></div>
             
         </div>
         {/* Size Quantity End */}
