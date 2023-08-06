@@ -2,7 +2,7 @@
 import ProductCard from '@/components/ProductCard'
 import Wrapper from '@/components/Wrapper'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import {  useSelector } from 'react-redux'
 
 const favourites = () => {
     const {favourites} = useSelector(state => state.favourite)
@@ -24,7 +24,7 @@ const favourites = () => {
 
                     
                     <div className='grid grid-cols-1 gap-[50px] md:grid-cols-3 lg:grid-cols-3 px-8 my-12'>
-                    {favourites.length>0?favourites.map((favourite)=>(<ProductCard key={favourite.id} name={favourite.attributes.name} originalPrice={favourite.attributes.original_price} thumbnail={favourite.attributes.thumbnail.data.attributes.url} slug={favourite.attributes.slug} discountedPrice={favourite.attributes.price} />)):<div className='flex items-center  flex-1 font-semibold text-xl justify-center h-full'><div className='w-full'>Nothing in Favourites</div></div>}
+                    {favourites.length>0?favourites.map((favourite)=>(<ProductCard fav={true} data={favourite} key={favourite.id}/> )):<div className='flex items-center  flex-1 font-semibold text-xl justify-center h-full'><div className='w-full'>Nothing in Favourites</div></div>}
                     </div>
                 </div>
                 {/* Items Added End */}

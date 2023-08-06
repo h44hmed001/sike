@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import {loadStripe} from '@stripe/stripe-js';
 import { makePaymentRequest } from '@/utils/api'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const cart = () => {
   const [loading,setLoading]=useState(false)
@@ -57,7 +58,7 @@ const cart = () => {
                 <div className='flex-[1] '>
                     <div className='text-xl font-bold'>Summary</div>
                     <Summary totalMoney={totalMoney} />
-                    <button onClick={handlePayment} className='bg-black mt-3 text-lg transition-transform active:scale-95 hover:bg-black/[0.7]   text-white py-3 w-full rounded-full flex justify-center gap-3 items-center'>Checkout {loading&&<Image src="/spinner.svg" />} </button>
+                    <button onClick={handlePayment} className='bg-black mt-3 text-lg transition-transform active:scale-95 hover:bg-black/[0.7]   text-white py-3 w-full rounded-full flex justify-center gap-3 items-center'>Checkout {loading&&<Image width={25} height={25} src="/spinner.svg" />} </button>
                 </div>
                 {/* Summary End */}
 

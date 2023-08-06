@@ -3,7 +3,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ProductCard from './ProductCard';
 
-const SuggestedCarousel = ({relatedProducts:{data}}) => {
+const SuggestedCarousel = ({relatedProducts}) => {
     const responsive = {
         desktop: {
           breakpoint: { max: 3000, min: 1024 },
@@ -18,14 +18,12 @@ const SuggestedCarousel = ({relatedProducts:{data}}) => {
           items: 1
         },
       };
-      for (let i=0;i<data.length;i++){
-        console.log(data[i].attributes)
-      }
+     console.log(relatedProducts)
   return (
     <div className='mt-[50px]  md:mt-[100px] mb-[100px] md:mb-[8px]'>
         <div className='text-3xl mb-5 font-semibold '>You Might Also Like</div>
         <Carousel itemClass='px-[10px] ' responsive={responsive} >
-          {data?.map((item)=>(<ProductCard name={item.attributes.name} thumbnail={item.attributes.thumbnail.data.attributes.url} slug={item.attributes.slug} discountedPrice={item.attributes.price} originalPrice={item.attributes.original_price} />
+          {relatedProducts.data?.map((item)=>(<ProductCard data={item} />
            ))}
            
         </Carousel>

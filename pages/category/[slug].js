@@ -1,16 +1,45 @@
 import ProductCard from '@/components/ProductCard'
 import Wrapper from '@/components/Wrapper'
 import { fetchDataFromApi } from '@/utils/api'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Category = ({category,products,slug}) => {
+  const [data, setData] = useState(products?.data); 
+  useEffect(()=>
+  {
+    setData(products?.data)
+  },[category])
+  
+  
+  const handleFiltering = (e) => {
+    const sortBy = e.target.value;
+    const sortedData = [...data]; // Create a copy of the data array to avoid mutating the original array
+    if (sortBy === 'lowToHigh') {
+      sortedData.sort((a, b) => a.attributes.price - b.attributes.price);
+
+    } else if (sortBy === 'highToLow') {
+      sortedData.sort((a, b) => b.attributes.price - a.attributes.price);
+      
+    }
+    setData(sortedData);
+
+  };
+  console.log(data)
  
   return (
     <div>
         <Wrapper className="flex flex-col ">
-        <div className='heading font-semibold mt-8 mb-5 leading-tight  text-[40px]'>{category.data[0].attributes.name} <span className='text-gray-600 text-xl'>({`${products.data.length}`})</span> </div>
+        <div className='flex justify-between items-center mt-8 mb-5'>
+        <div className='heading font-semibold  leading-tight  text-[40px]'>{category.data[0].attributes.name}<span className='text-gray-600 text-xl'> ({`${data?.length}`})</span> </div>
+        
+        <select onChange={(e)=>handleFiltering(e)} id='filters' className='text-black bg-transparent'>
+          <option selected="selected" className='hidden' disabled={true} value="#">Filters</option>
+          <option value="lowToHigh">Price(Low To High)</option>
+          <option value="highToLow">Price(High To Low)</option>
+        </select>
+        </div>
         <div className='grid grid-cols-1 gap-[80px] md:grid-cols-3 lg:grid-cols-3 px-8 my-12'>
-        {products?.data?.map((item)=><ProductCard name={item.attributes.name} discountedPrice={item.attributes.price} thumbnail={item.attributes.thumbnail.data.attributes.url} originalPrice={item.attributes.original_price} slug={item.attributes.slug}   />)
+        {data?.map((item)=><ProductCard data={item} />)
         }
             {/* <ProductCard/>
             <ProductCard/>

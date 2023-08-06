@@ -80,7 +80,7 @@ const ProductDetails = ({product,relatedProducts}) => {
             
             
             } className='bg-black mt-3 text-lg transition-transform active:scale-95 hover:bg-black/[0.7]   text-white py-5 w-full rounded-full'>Add to Cart</button>
-          {removeId===product.data[0].id?<button onClick={()=>dispatch(removeFromFavourites(product.data[0]))} className='mt-3 flex justify-center transition-transform active:scale-95 items-center text-lg border hover:border-black   text-black py-5 w-full rounded-full'>Remove From Favourites<FavoriteBorderOutlinedIcon/></button>:<button onClick={()=>dispatch(addToFavourites({...product?.data[0]}))} className='mt-3 flex justify-center transition-transform active:scale-95 items-center text-lg border hover:border-black   text-black py-5 w-full rounded-full'>Favourite<FavoriteBorderOutlinedIcon/></button>}
+          {removeId===product.data[0].id?<button className='mt-3 flex justify-center transition-transform active:scale-95 items-center text-lg border hover:border-black   text-black py-5 w-full rounded-full'>Added<FavoriteBorderOutlinedIcon/></button>:<button onClick={()=>dispatch(addToFavourites({...product?.data[0]}))} className='mt-3 flex justify-center transition-transform active:scale-95 items-center text-lg border hover:border-black   text-black py-5 w-full rounded-full'>Favourite<FavoriteBorderOutlinedIcon/></button>}
           {/* Product Details Start */}
           <div className='pt-7  '>
             <div className='font-bold text-lg'>Product Details</div>
